@@ -44,7 +44,8 @@ jobs:
           RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}
           RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}
         run: |
-          python build.py --hwcodec
+          python build.py
+
 
       - name: Upload AsmaryDesk Artifact
         uses: actions/upload-artifact@v4
@@ -52,4 +53,6 @@ jobs:
           name: AsmaryDesk-Windows-x64
           path: |
             target/release/rustdesk.exe
+            build/windows/x64/runner/Release/*.exe
             build/windows/runner/Release/*.exe
+            
