@@ -44,7 +44,9 @@ jobs:
           RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}
           RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}
         run: |
-          python build.py
+          # نصب پکیج‌های مورد نیاز با vcpkg اگر نیاز باشد، یا اجرای بیلد با فلگ‌های استاندارد
+          python build.py --force-vcpkg
+
 
 
       - name: Upload AsmaryDesk Artifact
