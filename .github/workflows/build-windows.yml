@@ -19,11 +19,6 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgGitCommitId: '9e593bb18ea69cc5095e012465dcd675a822ed0d'
-
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -44,10 +39,7 @@ jobs:
           RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}
           RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}
         run: |
-          # نصب پکیج‌های مورد نیاز با vcpkg اگر نیاز باشد، یا اجرای بیلد با فلگ‌های استاندارد
-          python build.py --force-vcpkg
-
-
+          python build.py
 
       - name: Upload AsmaryDesk Artifact
         uses: actions/upload-artifact@v4
@@ -57,4 +49,3 @@ jobs:
             target/release/rustdesk.exe
             build/windows/x64/runner/Release/*.exe
             build/windows/runner/Release/*.exe
-            
