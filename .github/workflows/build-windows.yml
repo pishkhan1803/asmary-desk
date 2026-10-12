@@ -6,11 +6,23 @@ on:
 jobs:
   build:
     runs-on: windows-2022
+    env:
+      VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: '9e593bb18ea69cc5095e012465dcd675a822ed0d'
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -27,7 +39,7 @@ jobs:
         run: choco install llvm -y
 
       - name: Build Windows Executable
-        shell: bash
+        shell: pwsh
         env:
           RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}
           RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}
@@ -40,4 +52,4 @@ jobs:
           name: AsmaryDesk-Windows-x64
           path: |
             target/release/rustdesk.exe
-            build/**/*.exe
+            build/windows/runner/Release/*.exe
